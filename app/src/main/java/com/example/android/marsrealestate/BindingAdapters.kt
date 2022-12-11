@@ -46,7 +46,7 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
 
 // called automatically when the Mars property list changes
 @BindingAdapter("listData")
-fun bindRecyclerView(recyclerView: RecyclerView, data: List<MarsProperty>){
+fun bindRecyclerView(recyclerView: RecyclerView, data: List<MarsProperty>?){
     val adapter = recyclerView.adapter as PhotoGridAdapter
 
     adapter.submitList(data)

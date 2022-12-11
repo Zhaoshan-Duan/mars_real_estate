@@ -58,7 +58,7 @@ class OverviewViewModel : ViewModel() {
         viewModelScope.launch {
 
             try {
-                var listResult = MarsApi.retrofitService.getProperties()
+                val listResult = MarsApi.retrofitService.getProperties()
 
                 // set _property to the first MarsProperty from ListResult
                 if (listResult.isNotEmpty()){
