@@ -17,4 +17,44 @@
 
 package com.example.android.marsrealestate.network
 
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import kotlinx.coroutines.Deferred
+import retrofit2.Call
+import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.http.GET
+
+// Hold Network Layer
+
+// Root web address of the Mars server endpoint
 private const val BASE_URL = "https://mars.udacity.com/"
+
+// Use Moshi Builder
+private val moshi = Moshi.Builder()
+    .add(KotlinJsonAdapterFactory())
+    .build()
+
+// Create Retrofit object using builder with ScalarConverterFactory and BASE_URL
+private val retrofit = Retrofit.Builder()
+    .addConverterFactory(MoshiConverterFactory.create(moshi))
+    .baseUrl(BASE_URL)
+    .build()
+
+// An interface explains how retrofit talks to web services using HTTP requests
+interface MarsApiService{
+
+    // request the JSON response string
+    @GET("realestate") // "realstate" end point is appended to the URL when this method is called
+    suspend fun getProperties():
+            List<MarsProperty> // Call object is used to create request
+
+}
+
+// Create MarsApi object using Retrofit to implement the MarsApiService
+object MarsApi{
+    val retrofitService: MarsApiService by lazy {
+        // initialize using MarsApiService interface
+        retrofit.create(MarsApiService::class.java)
+    }
+}
