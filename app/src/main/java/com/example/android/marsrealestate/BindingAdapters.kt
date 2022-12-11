@@ -20,8 +20,11 @@ package com.example.android.marsrealestate
 import android.widget.ImageView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.example.android.marsrealestate.network.MarsProperty
+import com.example.android.marsrealestate.overview.PhotoGridAdapter
 
 // Create the Binding Adapter, converting the imgSrcUrl to a URI with http schemes
 @BindingAdapter("imageUrl") // execute when the XML item has an imageUrl attribute
@@ -41,6 +44,13 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
     }
 }
 
+// called automatically when the Mars property list changes
+@BindingAdapter("listData")
+fun bindRecyclerView(recyclerView: RecyclerView, data: List<MarsProperty>){
+    val adapter = recyclerView.adapter as PhotoGridAdapter
+
+    adapter.submitList(data)
+}
 
 // Use Glide to load the imgUri into the imgView
 
