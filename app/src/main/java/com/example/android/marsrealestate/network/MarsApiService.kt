@@ -24,11 +24,19 @@ import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 // Hold Network Layer
 
 // Root web address of the Mars server endpoint
 private const val BASE_URL = "https://mars.udacity.com/"
+
+// Constants to match the query values the web service expects
+enum class MarsApiFilter(val value: String){
+    SHOW_RENT("rent"),
+    SHOW_BUY("buy"),
+    SHOW_ALL("all")
+}
 
 // Use Moshi Builder
 private val moshi = Moshi.Builder()
@@ -46,7 +54,7 @@ interface MarsApiService{
 
     // request the JSON response string
     @GET("realestate") // "realstate" end point is appended to the URL when this method is called
-    suspend fun getProperties():
+    suspend fun getProperties(@Query("filter") type:String ):
             List<MarsProperty> // Call object is used to create request
 
 }
