@@ -54,6 +54,19 @@ class OverviewViewModel : ViewModel() {
         getMarsRealEstateProperties()
     }
 
+    private val _navigateToSelectedProperty = MutableLiveData<MarsProperty>()
+
+    val navigateToSelectedProperty: LiveData<MarsProperty>
+        get() = _navigateToSelectedProperty
+
+    fun displayPropertyDetails(marsProperty: MarsProperty) {
+        _navigateToSelectedProperty.value = marsProperty
+    }
+
+    fun displayPropertyDetailsComplete() {
+        _navigateToSelectedProperty.value = null
+    }
+
     /**
      * Sets the value of the status LiveData to the Mars API status.
      */
@@ -75,6 +88,7 @@ class OverviewViewModel : ViewModel() {
                 _properties.value = ArrayList()
             }
         }
+
 
         // Calls retrofit service to return a call object
         //  enqueue to on the callback to start the network request on a background thread
